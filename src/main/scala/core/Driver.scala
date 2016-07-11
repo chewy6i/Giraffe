@@ -1,6 +1,6 @@
 package core
 
-import job.TestJob
+import job.{MatchingJob, TestBipartiteMatching}
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.SparkContext
 import org.slf4j.LoggerFactory
@@ -32,12 +32,17 @@ object Driver {
 
     logger.info("Run Job")
 
-    TestJob.sc = sc
-    TestJob.sqlContext = sqlContext
-    TestJob.hiveContext = hiveContext
+    MatchingJob.sc = sc
+    MatchingJob.sqlContext = sqlContext
+    MatchingJob.hiveContext = hiveContext
 
+    TestBipartiteMatching.sc = sc
+    TestBipartiteMatching.sqlContext = sqlContext
+    TestBipartiteMatching.hiveContext = hiveContext
 
-    TestJob.run()
+   // MatchingJob.run()
+
+    TestBipartiteMatching.run()
 
     sc.stop()
     logger.info("Exiting Driver.")
