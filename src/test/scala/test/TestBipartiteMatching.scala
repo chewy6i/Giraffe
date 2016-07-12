@@ -1,5 +1,6 @@
-package job
+package test
 
+import job.JobTrait
 import org.apache.spark.graphx.{Edge, EdgeTriplet, Graph, VertexId}
 import org.apache.spark.rdd.RDD
 import org.slf4j.LoggerFactory
@@ -40,11 +41,11 @@ import org.slf4j.LoggerFactory
 object TestBipartiteMatching extends JobTrait {
   val logger = LoggerFactory.getLogger("com")
 
-  class FNNode(val name: String)
+  trait FNNode{ var name: String}
 
-  case class Ingredient(override val name: String, category: String) extends FNNode(name)
+  case class Ingredient(var name: String, category: String) extends FNNode
 
-  case class Compound(override val name: String, cas: String) extends FNNode(name)
+  case class Compound(var name: String, cas: String) extends FNNode
 
   val comp_info = "/Users/salla/headhunt/datasets/comp_info.tsv"
   val ingr_comp = "/Users/salla/headhunt/datasets/ingr_comp.tsv"
@@ -75,7 +76,7 @@ object TestBipartiteMatching extends JobTrait {
         filter(! _.startsWith("#")).
         map {line =>
           val row = line split '\t'
-          Edge(row(0).toLong, 10000L + row(1).toInt, 1)
+          Edge(row(0).toLong, 10000L + row(1).toLong, 1)
         }
 
 
